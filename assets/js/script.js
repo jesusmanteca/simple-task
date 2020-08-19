@@ -7,24 +7,44 @@ var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
 
 
-// This is a way to get the same object element
-// var tellMeMore = document.querySelector("#save-task").textContent
-// console.log("This says", tellMeMore)
+//we'll also need to capture the drop-down menu
+
+
+
 
 // Now we need a way to observe the user's click of the <button>, which we found by using the querySelector in the document and creating a variable so that we can reference it. 
 var counter = 0
 
 var createTaskHandler = function() {
 
+
+    // this even.preventDefault comes in handy when we need to tell the browser that we're taking over for this event entirely
     event.preventDefault();
-    // create an element li
-    var taskItemEl = document.createElement("li");
-    // have the newly created element li say "Hello"
-    taskItemEl.textContent =  "Hello"
-    // add the css to this by adding the class name too
-    taskItemEl.className = "task-item";
-    // to the taskToDoEl, we'll append the taskItem we just created
-    tasksToDoEl.appendChild(taskItemEl)
+
+    // selecting the actual text box and using it to caputure the data after the click
+    var taskNameInput = document.querySelector("input[name='task-name']").value;
+    //we'll also need to capture the drop-down menu
+    var taskTypeInput = document.querySelector("select[name='task-type']").value;
+
+    // ***********************
+    // ***********************
+    // create list item
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "task-item";
+
+    // create div to hold task info and add to list item
+    var taskInfoEl = document.createElement("div");
+    // give it a class name
+    taskInfoEl.className = "task-info";
+    // add HTML content to div
+    taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskNameInput + "</h3><span class='task-type'>" + taskTypeInput + "</span>";
+
+    listItemEl.appendChild(taskInfoEl);
+
+    // add entire list item to list
+    tasksToDoEl.appendChild(listItemEl);
+    // ***********************
+    // ***********************
 
   }
 
