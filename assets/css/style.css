@@ -219,10 +219,11 @@ footer {
 @media screen and (max-width: 980px) {
   form .form-group {
     flex: 1 100%;
+    
   }
 
   form .form-group button {
-    width: 100%;
+    width: 50%;
   }
 
   .task-list-wrapper {
