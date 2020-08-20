@@ -12,13 +12,22 @@ var counter = 0
 
 var taskFormHandler = function(event) {
     
-    // this even.preventDefault comes in handy when we need to tell the browser that we're taking over for this event entirely
+    // this event.preventDefault comes in handy when we need to tell the browser that we're taking over for this event entirely
     event.preventDefault();
 
     // selecting the actual text box and using it to caputure the data after the click
     var taskNameInput = document.querySelector("input[name='task-name']").value;
     //we'll also need to capture the drop-down menu
     var taskTypeInput = document.querySelector("select[name='task-type']").value;
+
+    // check if input values are empty strings
+    if (!taskNameInput || !taskTypeInput) {
+        alert("You need to fill out the task form!");
+        return false;
+    }
+
+    // to erase the previous task's content and start over again
+    formEl.reset();
 
     // package up data as an object
     var taskDataObj = {
@@ -55,11 +64,6 @@ var createTaskEl = function (taskDataObj) {
 }
 
 formEl.addEventListener("submit", taskFormHandler)
-
-
-
-
-// Then we'll create a response from the button click, which will execute the operation of adding a task item to the task list. We must break down the process step-by-step to solve this problem.
 
 
 
