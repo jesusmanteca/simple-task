@@ -1,3 +1,22 @@
+// ********************************************
+// *********** MAKING TASK ********************
+// ************ BUCKETS ***********************
+// ************** Test ************************
+
+// var taskListWrapperEl = document.querySelector(".task-list-wrapper");
+// var taskInProgressEl = document.createElement("section");
+// taskInProgressEl.className = "task-list-wrapper";
+// taskInProgressEl.innerHTML = '<h2 class="list-title">Hello?</h2>';
+// // list what you're appending to first, then .appendchild, then (what you're appending)
+// var appendTaskList = function (){
+//     taskListWrapperEl.appendChild(taskInProgressEl)
+// }
+// appendTaskList()
+
+
+// ********************************************
+// ********************************************
+
 // you can use the querySelector to look for something in the html and find it. If it's an id, use a .prefix, if it's a class, use the #prefix - then you can use a built-in property of the DOM element, like .textContent to find the content within the element. 
 
 // the form took the place of the inital button we created because we want to control what happens on the form AND the button
