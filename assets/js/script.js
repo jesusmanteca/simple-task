@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-// ********************************************
-// *********** MAKING TASK ********************
-// ************ BUCKETS ***********************
-// ************** Test ************************
-
-// var taskListWrapperEl = document.querySelector(".task-list-wrapper");
-// var taskInProgressEl = document.createElement("section");
-// taskInProgressEl.className = "task-list-wrapper";
-// taskInProgressEl.innerHTML = '<h2 class="list-title">Hello?</h2>';
-// // list what you're appending to first, then .appendchild, then (what you're appending)
-// var appendTaskList = function (){
-//     taskListWrapperEl.appendChild(taskInProgressEl)
-// }
-// appendTaskList()
-
-
-// ********************************************
-// ********************************************
-=======
 // Column for Adventure
 var tasksInProgressEl = document.querySelector("#tasks-in-progress");
 
@@ -29,7 +9,6 @@ var pageContentEl = document.querySelector("#page-content");
 
 // this is going to keep track of our id's for each task
 var taskIdCounter = 0;
->>>>>>> feature/updating-tasks
 
 // you can use the querySelector to look for something in the html and find it. If it's an id, use a .prefix, if it's a class, use the #prefix - then you can use a built-in property of the DOM element, like .textContent to find the content within the element. 
 
