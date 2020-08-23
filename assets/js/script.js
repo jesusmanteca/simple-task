@@ -65,6 +65,9 @@ var taskFormHandler = function(event) {
                 tasks[i].type = taskType;
             }
         };
+            
+        // save changes into local storage
+        saveTasks();
 
         alert("Task Updated!");
 
@@ -72,6 +75,12 @@ var taskFormHandler = function(event) {
         formEl.removeAttribute("data-task-id");
         document.querySelector("#save-task").textContent = "Add Task";
     };
+
+
+
+
+
+
 
     // has data attribute, so get task id and call function to complete edit process
     if (isEdit) {
@@ -126,6 +135,9 @@ var createTaskEl = function (taskDataObj) {
 
     taskDataObj.id = taskIdCounter;
     tasks.push(taskDataObj)
+
+    // save changes into local storage
+    saveTasks();
 
     // increase task counter for next unique id
     taskIdCounter++;
@@ -207,6 +219,9 @@ var deleteTask = function (taskId) {
 
     // reassign tasks array to be the same as updatedTaskArr
     tasks = updatedTaskArr;
+
+    // save changes into local storage
+    saveTasks();
 }
 
 var editTask = function(taskId){
@@ -257,6 +272,8 @@ var taskStatusChangeHandler = function(event) {
             tasks[i].status = statusValue;
         }
     }
+        // save changes into local storage
+        saveTasks();
   };
 
 // this is the handler for dragging
@@ -322,7 +339,8 @@ var dropTaskHandler = function (event) {
         }
     }
 
-    console.log(tasks);
+    // save changes into local storage
+    saveTasks();;
 };
 
 var dragLeaveHandler = function(event){
@@ -330,6 +348,11 @@ var dragLeaveHandler = function(event){
     if (taskListEl) {
         taskListEl.removeAttribute("style")
     }
+}
+
+// saving to the local storage
+var saveTasks = function() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
 formEl.addEventListener("submit", taskFormHandler)
