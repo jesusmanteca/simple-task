@@ -22,6 +22,8 @@ var tasksToDoEl = document.querySelector("#tasks-to-do");
 // Now we need a way to observe the user's click of the <button>, which we found by using the querySelector in the document and creating a variable so that we can reference it. 
 var counter = 0
 
+// We're going to keep our tasks in an array so we can store them in local storage
+var tasks = [];
 
 
 var taskFormHandler = function(event) {
@@ -55,6 +57,15 @@ var taskFormHandler = function(event) {
         taskSelected.querySelector("h3.task-name").textContent = taskName;
         taskSelected.querySelector("span.task-type").textContent = taskType;
 
+        // loop through tasks array and task object with new content
+        for (var i = 0; i < tasks.length; i++) {
+            // we wrap the taskId with a parseInt() function and convert it to a number for the comparison
+            if (tasks[i].id === parseInt(taskId)) {
+                tasks[i].name = taskName;
+                tasks[i].type = taskType;
+            }
+        };
+
         alert("Task Updated!");
 
         // reset the form by removing the task ID and changing the button text back to normal
@@ -71,7 +82,8 @@ var taskFormHandler = function(event) {
     else {
         var taskDataObj = {
             name: taskNameInput,
-            type: taskTypeInput
+            type: taskTypeInput,
+            status: "to do"
         };
 
         createTaskEl(taskDataObj);
@@ -80,6 +92,8 @@ var taskFormHandler = function(event) {
 
 var createTaskEl = function (taskDataObj) {
 
+    // console.log(taskDataObj);
+    // console.log(taskDataObj.status);
     // create list item
     var listItemEl = document.createElement("li");
 
@@ -109,6 +123,9 @@ var createTaskEl = function (taskDataObj) {
     tasksToDoEl.appendChild(listItemEl);
 
     listItemEl.appendChild(taskActionsEl)
+
+    taskDataObj.id = taskIdCounter;
+    tasks.push(taskDataObj)
 
     // increase task counter for next unique id
     taskIdCounter++;
@@ -157,9 +174,6 @@ var createTaskActions = function (taskId) {
     return actionContainerEl;
 };
 
-
-formEl.addEventListener("submit", taskFormHandler)
-
 // Gets triggered with Add Task Button click
 var taskButtonHandler = function (event) {
     console.log(event.target);
@@ -177,8 +191,22 @@ var deleteTask = function (taskId) {
 
     // get task list item element
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
-    console.log(taskSelected);
+    // console.log(taskSelected);
     taskSelected.remove();
+
+    // create new array to hold updated list of tasks
+    var updatedTaskArr = [];
+
+    // loop through current tasks
+    for (var i = 0; i < tasks.length; i++) {
+        // if tasks[i].id doesn't match the value of taskId, let's keep that task and push it into the new array
+        if (tasks[i].id !== parseInt(taskId)) {
+            updatedTaskArr.push(tasks[i]);
+        }
+    }
+
+    // reassign tasks array to be the same as updatedTaskArr
+    tasks = updatedTaskArr;
 }
 
 var editTask = function(taskId){
@@ -219,12 +247,17 @@ var taskStatusChangeHandler = function(event) {
       else if (statusValue === "adventures") {
         tasksInProgressEl.appendChild(taskSelected);
       } 
-      else if (statusValue === "tales") {
+    else if (statusValue === "tales") {
         tasksCompletedEl.appendChild(taskSelected);
-      }
+    }
 
+    // update tasks' statuses in tasks array
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+            tasks[i].status = statusValue;
+        }
+    }
   };
-
 
 // this is the handler for dragging
 var dragTaskHandler = function(event){
@@ -279,8 +312,17 @@ var dropTaskHandler = function (event) {
       }
 
       //remove attribute to stop the background coloring hovering effect 
-      dropZoneEl.removeAttribute("style");
-      dropZoneEl.appendChild(draggableElement);
+    dropZoneEl.removeAttribute("style");
+    dropZoneEl.appendChild(draggableElement);
+
+    // loop through tasks array to find and update the updated task's status
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(id)) {
+            tasks[i].status = statusSelectEl.value.toLowerCase();
+        }
+    }
+
+    console.log(tasks);
 };
 
 var dragLeaveHandler = function(event){
@@ -290,10 +332,10 @@ var dragLeaveHandler = function(event){
     }
 }
 
+formEl.addEventListener("submit", taskFormHandler)
 
 // to delete tasks, I'll need to bubble the click to the main content
 pageContentEl.addEventListener("click", taskButtonHandler)
-
 
 pageContentEl.addEventListener("change", taskStatusChangeHandler);
 
