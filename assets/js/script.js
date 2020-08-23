@@ -250,6 +250,7 @@ var dropZoneDragHandler = function (event) {
     var taskListEl = event.target.closest(".task-list");
     if (taskListEl) {
         event.preventDefault();
+        taskListEl.setAttribute("style", "background: rgba(244, 162, 97, 0.7); ");
     }
 };
 
@@ -276,8 +277,18 @@ var dropTaskHandler = function (event) {
       else if (statusType === "tasks-completed") {
         statusSelectEl.selectedIndex = 2;
       }
+
+      //remove attribute to stop the background coloring hovering effect 
+      dropZoneEl.removeAttribute("style");
       dropZoneEl.appendChild(draggableElement);
 };
+
+var dragLeaveHandler = function(event){
+    var taskListEl = event.target.closest(".task-list");
+    if (taskListEl) {
+        taskListEl.removeAttribute("style")
+    }
+}
 
 
 // to delete tasks, I'll need to bubble the click to the main content
@@ -292,6 +303,8 @@ pageContentEl.addEventListener("dragstart", dragTaskHandler);
 pageContentEl.addEventListener("dragover", dropZoneDragHandler);
 
 pageContentEl.addEventListener("drop", dropTaskHandler);
+
+pageContentEl.addEventListener("dragleave", dragLeaveHandler);
 
 // *********************************** //
 // *******PRACTICE******************** //
