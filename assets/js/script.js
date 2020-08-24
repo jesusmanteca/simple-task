@@ -354,7 +354,7 @@ var dragLeaveHandler = function(event){
 
 var loadTasks = function(){
 // Get task items from localStorage
-var tasks = localStorage.getItem("tasks", JSON.stringify(tasks));
+tasks = localStorage.getItem("tasks", JSON.stringify(tasks));
 console.log(tasks)
 
 if (!tasks) {
@@ -364,7 +364,7 @@ if (!tasks) {
 
 // Convert tasks from the stringified format back into an array of objects
 tasks = JSON.parse(tasks);
-console.log(tasks)
+
 
 // Iterate through tasks array and creates task elements on the page from it
 for (i = 0; i < tasks.length; i++){
