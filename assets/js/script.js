@@ -141,6 +141,8 @@ var createTaskEl = function (taskDataObj) {
 
     // increase task counter for next unique id
     taskIdCounter++;
+
+
     
 }
 
@@ -350,6 +352,66 @@ var dragLeaveHandler = function(event){
     }
 }
 
+var loadTasks = function(){
+// Get task items from localStorage
+var tasks = localStorage.getItem("tasks", JSON.stringify(tasks));
+console.log(tasks)
+
+if (!tasks) {
+    tasks === [];
+    return false;
+}
+
+// Convert tasks from the stringified format back into an array of objects
+tasks = JSON.parse(tasks);
+console.log(tasks)
+
+// Iterate through tasks array and creates task elements on the page from it
+for (i = 0; i < tasks.length; i++){
+    
+    tasks.id = taskIdCounter
+    console.log(tasks[i])
+    var listItemEl = document.createElement("li");
+    listItemEl.className = "task-item";
+
+    // add task id as a custom attribute
+    listItemEl.setAttribute("data-task-id", tasks[i].id);
+
+    // when we create a task item, we're giving it the attribute to be draggable
+    listItemEl.setAttribute("draggable", "true");
+     console.log(listItemEl)
+
+     var taskInfoEl = document.createElement("div")
+     taskInfoEl.className = "task-info"
+     taskInfoEl.innerHTML = "<h3 class='task-name'>" + tasks[i].name + "</h3><span class='task-type'>" + tasks[i].type + "</span>";
+     listItemEl.appendChild(taskInfoEl);
+
+     //Create the actions for the task
+     var taskActionsEl = createTaskActions(tasks[i].id)
+     listItemEl.appendChild(taskActionsEl);
+     console.log(listItemEl)
+
+     if (tasks[i].status === "to do") {
+        listItemEl.querySelector("select[name='status-change']").selectedIndex = 0;
+        tasksToDoEl.appendChild(listItemEl)
+     } else if (tasks[i].status === "adventures") {
+        listItemEl.querySelector("select[name='status-change']").selectedIndex = 1;
+        tasksInProgressEl.appendChild(listItemEl)
+     } else if (tasks[i].status === "tales") {
+        listItemEl.querySelector("select[name='status-change']").selectedIndex = 2;
+        tasksCompletedEl.appendChild(listItemEl)
+     };
+
+     taskIdCounter++;
+     console.log(listItemEl)
+
+
+
+}
+
+
+;}
+
 // saving to the local storage
 var saveTasks = function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -370,6 +432,8 @@ pageContentEl.addEventListener("dragover", dropZoneDragHandler);
 pageContentEl.addEventListener("drop", dropTaskHandler);
 
 pageContentEl.addEventListener("dragleave", dragLeaveHandler);
+
+loadTasks()
 
 // *********************************** //
 // *******PRACTICE******************** //
